@@ -165,7 +165,15 @@ public class GS{
 		}
 
 		for(int i=0; i<n;i++){
-			System.out.println("Female no: "+i+" has been matched to male no: "+match[i]);
+			
+			int countfem=(1+2*i);
+			//System.out.println("countfem: "+countfem);
+			int countmal=2*match[i];
+
+			//System.out.println("Female: "+countfem+" male: "+countmal);
+			//System.out.println("Female no: "+names[countfem]+" has been matched to male no: "+names[countmal]);
+
+			System.out.println(names[countmal]+" --- "+names[countfem]);
 		}
 
 

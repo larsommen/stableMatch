@@ -54,7 +54,8 @@ public class GS{
 				}else{
 					//male
 					
-					maleprefs[(id-1)/2][i]=(Integer.valueOf(prefparts[i+1]))/2;
+					maleprefs[(id-1)/2][i]=((Integer.valueOf(prefparts[i+1]))/2)-1;
+					System.out.println("Updated maleprefs: "+maleprefs[(id-1)/2][i]);
 				//	System.out.println("Ran male "+id);
 
 				}
@@ -98,14 +99,17 @@ public class GS{
 
 				//check if currentFemale is awailable
 				//If - update match and currentPreff
-				
-					
-					//while currentMale not preffered increment nextFemale and get her Id
-					while(match[currentFemale]!=-1 || currentPref[currentFemale]<femaleprefs[currentFemale][currentMale]&&currentPref[currentFemale]!=0){
 
-						System.out.println("currentFemale: "+currentFemale+" currentMale: "+ currentMale);
+					System.out.println("currentFemale: "+currentFemale+" currentMale: "+ currentMale);
+					//while currentMale not preffered increment nextFemale and get her Id
+					while(match[currentFemale]!=-1 || (currentPref[currentFemale]<femaleprefs[currentFemale][currentMale]&&currentPref[currentFemale]>0)){
+
+						System.out.println("currentFemale: "+currentFemale+" currentMale: "+ currentMale+" nextFemale[currentMale]: "+ nextFemale[currentMale]+" in the while");
 						nextFemale[currentMale]++;
+;
 						currentFemale = maleprefs[currentMale][nextFemale[currentMale]];
+
+						System.out.println("currentFemale "+currentFemale);
 
 					}
 					// currentFemale is free - make mathc
@@ -123,6 +127,7 @@ public class GS{
 					freeMales.enqueue(match[currentFemale]);
 
 					match[currentFemale]=currentMale;
+
 					currentPref[currentFemale]= femaleprefs[currentFemale][currentMale];
 				
 				}

@@ -102,20 +102,21 @@ public class GSextra{
 
 
 	public  int getFreeMan (){
-		StdOut.println("getFreeMan ran");
 		int freeMan = (int)freeMales.dequeue();
+		StdOut.println("getFreeMan ran " + freeMan);
 		return freeMan;
 	}
 
 	public  int getNextWoman (int manToPropose) {
-		StdOut.println("getNextWoman ran");
 		int womanNumber = nextFemale[manToPropose];
 		int nextWoman = maleprefs[manToPropose][womanNumber];
+		StdOut.println("getNextWoman ran " + nextWoman);
+		nextFemale[manToPropose]++;
 		return nextWoman;
 	}
 
 	public boolean isMarried (int wantedWoman) {
-		StdOut.println("isMarried ran");
+		StdOut.println("isMarried ran " + match[wantedWoman]);
 		if (match[wantedWoman] == -1) {
 			return false;
 		}
@@ -125,39 +126,49 @@ public class GSextra{
 	public boolean isBetter (int newMan, int woman) {
 		int oldManPref = currentPref[woman];
 		int newManPref = femaleprefs[woman][newMan];
-		StdOut.println("isBetter ran");
+		StdOut.println("isBetter ran with new " + newManPref + " and old " + oldManPref);
 		if (newManPref < oldManPref) {
 			return true;
 		} else return false;
 	}
 
-	public void getDivorceAndGetMarried (int woman, int newMan) {
+	public void getDivorceAndGetMarried (int newMan, int woman) {
 		int oldMan = match[woman];
 		match[woman] = newMan;
+		currentPref[woman] = femaleprefs[woman][newMan];
 		freeMales.enqueue(oldMan);
 		StdOut.println("Enqueued old man:" + oldMan);
 	}
 
-	public void getMarried (int woman, int newMan) {
+	public void getMarried (int newMan, int woman) {
 		match[woman] = newMan;
-		StdOut.println("getMarried ran");
+		currentPref[woman] = femaleprefs[woman][newMan];
+		StdOut.println("getMarried ran " + match[woman]);
 	}
 
 	public static void main(String[] args) {
 		GSextra gs = new GSextra();
 		while (!gs.freeMales.isEmpty()) {
 			int freeMan = gs.getFreeMan();
-			int womanToMarry = gs.getNextWoman(freeMan);
-			boolean isMarried = gs.isMarried(womanToMarry);
 
-			if (isMarried == true) {
-				if (gs.isBetter(freeMan, womanToMarry) == true) {
-					gs.getDivorceAndGetMarried(freeMan, womanToMarry);
-				}else {
-					gs.getNextWoman(freeMan);
+			boolean gotMarried = false;
+
+			while (gotMarried == false) {
+				int womanToMarry = gs.getNextWoman(freeMan);
+				boolean isMarried = gs.isMarried(womanToMarry);
+
+				if (isMarried == true) {
+					if (gs.isBetter(freeMan, womanToMarry) == true) {
+						gs.getDivorceAndGetMarried(freeMan, womanToMarry);
+						gotMarried = true;
+
+					}else {
+						continue;
+					}
+				} else {
+					gs.getMarried(freeMan, womanToMarry);
+					gotMarried = true;
 				}
-			} else {
-				gs.getMarried(freeMan, womanToMarry);
 			}
 		}
 

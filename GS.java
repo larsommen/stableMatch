@@ -2,6 +2,9 @@
 public class GS{
 
 
+	//by Denitsa Mlechkova, Andreas Rangholm,  __  and Lars Ommen - August 2015
+
+
 
 	public static void main(String[] args) {
 

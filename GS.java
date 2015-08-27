@@ -55,7 +55,7 @@ public class GS{
 					//male
 					
 					maleprefs[(id-1)/2][i]=((Integer.valueOf(prefparts[i+1]))/2)-1;
-					System.out.println("Updated maleprefs: "+maleprefs[(id-1)/2][i]);
+				//	System.out.println("Updated maleprefs: "+maleprefs[(id-1)/2][i]);
 				//	System.out.println("Ran male "+id);
 
 				}
@@ -102,7 +102,7 @@ public class GS{
 
 					System.out.println("currentFemale: "+currentFemale+" currentMale: "+ currentMale);
 					//while currentMale not preffered increment nextFemale and get her Id
-					while(match[currentFemale]!=-1 || (currentPref[currentFemale]<femaleprefs[currentFemale][currentMale]&&currentPref[currentFemale]>0)){
+					while(match[currentFemale]!=-1 && (currentPref[currentFemale]<femaleprefs[currentFemale][currentMale]&&currentPref[currentFemale]>0)){
 
 						System.out.println("currentFemale: "+currentFemale+" currentMale: "+ currentMale+" nextFemale[currentMale]: "+ nextFemale[currentMale]+" in the while");
 						nextFemale[currentMale]++;
@@ -117,6 +117,7 @@ public class GS{
 					if(match[currentFemale]==-1){
 					match[currentFemale]=currentMale;
 					currentPref[currentFemale]= femaleprefs[currentFemale][currentMale];
+					System.out.println("----- Matching unmatched female");
 						}else{
 
 
@@ -126,10 +127,16 @@ public class GS{
 					System.out.println("MatchcurrentFemale: "+ match[currentFemale]);
 					freeMales.enqueue(match[currentFemale]);
 
+					System.out.println("++++++ Exchangeing male: "+match[currentFemale]+" with male: "+currentMale);
+
+
 					match[currentFemale]=currentMale;
 
 					currentPref[currentFemale]= femaleprefs[currentFemale][currentMale];
-				
+
+					System.out.println("currentFemale: "+currentFemale+" is now matched with male: "+currentMale);
+
+
 				}
 
 				
@@ -166,14 +173,14 @@ public class GS{
 
 		for(int i=0; i<n;i++){
 			
-			int countfem=(1+2*i);
+			int countfemale=(1+2*i);
+			
+			int countmale=2*match[i];
 			//System.out.println("countfem: "+countfem);
-			int countmal=2*match[i];
-
 			//System.out.println("Female: "+countfem+" male: "+countmal);
 			//System.out.println("Female no: "+names[countfem]+" has been matched to male no: "+names[countmal]);
 
-			System.out.println(names[countmal]+" --- "+names[countfem]);
+			System.out.println(names[countmale]+" --- "+names[countfemale]);
 		}
 
 

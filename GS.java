@@ -94,11 +94,11 @@ public class GS{
 				System.out.println("Current male is: "+currentMale);
 
 				int currentFemale = maleprefs[currentMale][nextFemale[currentMale]];
-				nextFemale[currentMale]++;
+				//nextFemale[currentMale]++;
 
 
-				//check if currentFemale is awailable
-				//If - update match and currentPreff
+				//check if currentFemale is awailable or she prefers current male over her match
+				//If  not - look at next female
 
 					System.out.println("currentFemale: "+currentFemale+" currentMale: "+ currentMale);
 					//while currentMale not preffered increment nextFemale and get her Id
@@ -125,10 +125,14 @@ public class GS{
 					// put currentFemala's mathc on stack and update match and currentPref[currentFemale]
 
 					System.out.println("MatchcurrentFemale: "+ match[currentFemale]);
+
+					//Put the male currentFemale is currently matched with on stack (set him free)
 					freeMales.enqueue(match[currentFemale]);
 
 					System.out.println("++++++ Exchangeing male: "+match[currentFemale]+" with male: "+currentMale);
 
+
+					//match current female with current male
 
 					match[currentFemale]=currentMale;
 
@@ -139,7 +143,8 @@ public class GS{
 
 				}
 
-				
+				nextFemale[currentMale]++;
+
 
 
 				

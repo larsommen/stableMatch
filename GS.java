@@ -1,29 +1,39 @@
 
 public class GS{
+	int [][] maleprefs;
+
+	public int[][] getMaleprefs() {
+		return this.maleprefs;
+	}
+
+	int [][] femaleprefs;
+
+	public int[][] getFemaleprefs() {
+		return this.femaleprefs;
+	}
+
+	String [] names;
+	String[] prefparts;
+	int [] match;
+	int [] currentPref;
+	int[] nextFemale;
+	ResizingArrayQueue freeMales;
 
 
-	//by Denitsa Mlechkova, Andreas Rangholm,  __  and Lars Ommen - August 2015
+	public GS() {
+		String line =StdIn.readLine();
 
+		while(line.charAt(0)=='#'){
+			line=StdIn.readLine();
+		}			
 
-
-	public static void main(String[] args) {
-
-
-					String line =StdIn.readLine();
-
-					while(line.charAt(0)=='#'){
-						line=StdIn.readLine();
-					}
-
-				
-
-					String number =line;
+		String number =line;
 
 		int n = Integer.valueOf(number.substring(2));
 
 		System.out.println(" n is: "+ n);
 
-		String []names = new String[2*n];
+		names = new String[2*n];
 
 		System.out.println();
 
@@ -36,14 +46,14 @@ public class GS{
 
 			StdIn.readLine();
 
-			int [] [] maleprefs= new int[n] [n];
-			int [] [] femaleprefs = new int [n][n];
+			maleprefs= new int[n] [n];
+			femaleprefs = new int [n][n];
 
 		while(StdIn.hasNextLine()){
 
 			line = StdIn.readLine();
 
-			String[] prefparts = line.split(" ");
+			prefparts = line.split(" ");
 
 			int id = Integer.valueOf(prefparts[0].substring(0, prefparts[0].length()-1));
 
@@ -63,9 +73,7 @@ public class GS{
 
 				}
 			}
-
-			
-
+		
 		}
 
 
@@ -75,122 +83,113 @@ public class GS{
 
 			//Do maching
 
-			int [] match = new int [n];
+		match = new int [n];
 
-			for(int i =0; i<n;i++){
-				match[i]=-1;
-			}
-
-			int [] currentPref =new int [n];
-
-
-			int[] nextFemale= new int [n]; 
-
-			ResizingArrayQueue freeMales= new ResizingArrayQueue();
-
-			for (int i=0; i<n;i++){
-				freeMales.enqueue(i);
-			}
-
-			while(!freeMales.isEmpty()){
-				int currentMale=(int)freeMales.dequeue();
-				System.out.println("Current male is: "+currentMale);
-
-				int currentFemale = maleprefs[currentMale][nextFemale[currentMale]];
-				//nextFemale[currentMale]++;
-
-
-				//check if currentFemale is awailable or she prefers current male over her match
-				//If  not - look at next female
-
-					System.out.println("currentFemale: "+currentFemale+" currentMale: "+ currentMale);
-					//while currentMale not preffered increment nextFemale and get her Id
-					while(match[currentFemale]!=-1 && (currentPref[currentFemale]<femaleprefs[currentFemale][currentMale]&&currentPref[currentFemale]>0)){
-
-						System.out.println("currentFemale: "+currentFemale+" currentMale: "+ currentMale+" nextFemale[currentMale]: "+ nextFemale[currentMale]+" in the while");
-						nextFemale[currentMale]++;
-;
-						currentFemale = maleprefs[currentMale][nextFemale[currentMale]];
-
-						System.out.println("currentFemale "+currentFemale);
-
-					}
-					// currentFemale is free - make mathc
-
-					if(match[currentFemale]==-1){
-					match[currentFemale]=currentMale;
-					currentPref[currentFemale]= femaleprefs[currentFemale][currentMale];
-					System.out.println("----- Matching unmatched female");
-						}else{
-
-
-					// currentFemale is in relation but prefers currentMale
-					// put currentFemala's mathc on stack and update match and currentPref[currentFemale]
-
-					System.out.println("MatchcurrentFemale: "+ match[currentFemale]);
-
-					//Put the male currentFemale is currently matched with on stack (set him free)
-					freeMales.enqueue(match[currentFemale]);
-
-					System.out.println("++++++ Exchangeing male: "+match[currentFemale]+" with male: "+currentMale);
-
-
-					//match current female with current male
-
-					match[currentFemale]=currentMale;
-
-					currentPref[currentFemale]= femaleprefs[currentFemale][currentMale];
-
-					System.out.println("currentFemale: "+currentFemale+" is now matched with male: "+currentMale);
-
-
-				}
-
-				nextFemale[currentMale]++;
-
-
-
-				
-
-
-				
-
-			}
-
-
-
-
-			//Do printout
-
-		for (int i=0; i<n;i++){
-				System.out.println("Femalel: ");
-				System.out.println("Id = "+i+" ");
-			for (int j=0; j<n; j++){
-				System.out.printf(femaleprefs[i][j]+" ");
-			}
-			System.out.println();
-			System.out.println("Males: ");
-			System.out.println("Id = "+i+" ");
-
-			for (int j=0; j<n; j++){
-
-				System.out.printf(maleprefs[i][j]+" ");
-			}
-			System.out.println();
+		for(int i =0; i<n;i++){
+			match[i]=-1;
 		}
 
-		for(int i=0; i<n;i++){
+		currentPref =new int [n];
+		nextFemale= new int [n]; 
+		freeMales = new ResizingArrayQueue();
+
+		for (int i=0; i<n;i++){
+			freeMales.enqueue(i);
+			StdOut.println("enqued:" + i);
+		}
+
+	}
+
+
+	public  int getFreeMan (){
+		int freeMan = (int)freeMales.dequeue();
+		StdOut.println("getFreeMan ran " + freeMan);
+		return freeMan;
+	}
+
+	public  int getNextWoman (int manToPropose) {
+		int womanNumber = nextFemale[manToPropose];
+		int nextWoman = maleprefs[manToPropose][womanNumber];
+		StdOut.println("getNextWoman ran " + nextWoman);
+		nextFemale[manToPropose]++;
+		return nextWoman;
+	}
+
+	public boolean isMarried (int wantedWoman) {
+		StdOut.println("isMarried ran " + match[wantedWoman]);
+		if (match[wantedWoman] == -1) {
+			return false;
+		}
+		else return true;	
+	}
+
+	public boolean isBetter (int newMan, int woman) {
+		int oldManPref = currentPref[woman];
+		int newManPref = femaleprefs[woman][newMan];
+		StdOut.println("isBetter ran with new " + newManPref + " and old " + oldManPref);
+		if (newManPref < oldManPref) {
+			return true;
+		} else return false;
+	}
+
+	public void getDivorceAndGetMarried (int newMan, int woman) {
+		int oldMan = match[woman];
+		match[woman] = newMan;
+		currentPref[woman] = femaleprefs[woman][newMan];
+		freeMales.enqueue(oldMan);
+		StdOut.println("Enqueued old man:" + oldMan);
+	}
+
+	public void getMarried (int newMan, int woman) {
+		match[woman] = newMan;
+		currentPref[woman] = femaleprefs[woman][newMan];
+		StdOut.println("getMarried ran " + match[woman]);
+	}
+
+	public static void main(String[] args) {
+		GS gs = new GS();
+		while (!gs.freeMales.isEmpty()) {
+			int freeMan = gs.getFreeMan();
+
+			boolean gotMarried = false;
+
+			while (gotMarried == false) {
+				int womanToMarry = gs.getNextWoman(freeMan);
+				boolean isMarried = gs.isMarried(womanToMarry);
+
+				if (isMarried == true) {
+					if (gs.isBetter(freeMan, womanToMarry) == true) {
+						gs.getDivorceAndGetMarried(freeMan, womanToMarry);
+						gotMarried = true;
+
+					}else {
+						continue;
+					}
+				} else {
+					gs.getMarried(freeMan, womanToMarry);
+					gotMarried = true;
+				}
+			}
+		}
+
+		for (int i = 0; i<gs.match.length; i++){
+			StdOut.println(i + " -- " + gs.match[i]);
+
+
+		}
+
+
+		for(int i=0; i<gs.match.length;i++){
 			
 			int countfemale=(1+2*i);
 			
-			int countmale=2*match[i];
-			//System.out.println("countfem: "+countfem);
-			//System.out.println("Female: "+countfem+" male: "+countmal);
-			//System.out.println("Female no: "+names[countfem]+" has been matched to male no: "+names[countmal]);
+			int countmale=2*gs.match[i];
 
-			System.out.println(names[countmale]+" --- "+names[countfemale]);
+			System.out.println(gs.names[countmale]+" --- "+gs.names[countfemale]);
 		}
-
-
+		
 	}
+
 }
+
+

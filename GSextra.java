@@ -174,6 +174,21 @@ public class GSextra{
 
 		for (int i = 0; i<gs.match.length; i++){
 			StdOut.println(i + " -- " + gs.match[i]);
+
+
+		}
+
+
+		for(int i=0; i<gs.match.length;i++){
+			
+			int countfemale=(1+2*i);
+			
+			int countmale=2*gs.match[i];
+			//System.out.println("countfem: "+countfem);
+			//System.out.println("Female: "+countfem+" male: "+countmal);
+			//System.out.println("Female no: "+names[countfem]+" has been matched to male no: "+names[countmal]);
+
+			System.out.println(gs.names[countmale]+" --- "+gs.names[countfemale]);
 		}
 		
 	}

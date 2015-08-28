@@ -1,17 +1,7 @@
 
 public class GS{
 	int [][] maleprefs;
-
-	public int[][] getMaleprefs() {
-		return this.maleprefs;
-	}
-
 	int [][] femaleprefs;
-
-	public int[][] getFemaleprefs() {
-		return this.femaleprefs;
-	}
-
 	String [] names;
 	String[] prefparts;
 	int [] match;

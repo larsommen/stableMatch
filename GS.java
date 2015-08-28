@@ -2,12 +2,14 @@
 public class GS{
 
 
+
      /* 
      *
      * by Denitsa Mlechkova, Andreas Rangholm, Dimitar Gyurov and Lars Ommen - August 2015
 	 * Dependencies: StdIn.java StdOut.java	ResizingArrayQueue.java (Robert Sedgewick and Kevin Wayne, Algorithms 4th edition)
 	 *
 	 */
+
 
 
 	int [][] maleprefs;

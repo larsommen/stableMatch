@@ -1,29 +1,27 @@
 
 public class GS{
+
+
+     /* 
+     *
+     * by Denitsa Mlechkova, Andreas Rangholm, Dimitar Gyurov and Lars Ommen - August 2015
+	 * Dependencies: StdIn.java StdOut.java	ResizingArrayQueue.java (Robert Sedgewick and Kevin Wayne, Algorithms 4th edition)
+	 *
+	 */
+
+
 	int [][] maleprefs;
-
-	public int[][] getMaleprefs() {
-		return this.maleprefs;
-	}
-
 	int [][] femaleprefs;
-
-	public int[][] getFemaleprefs() {
-		return this.femaleprefs;
-	}
-
 	String [] names;
 	String[] prefparts;
 	int [] match;
 	int [] currentPref;
 	int[] nextFemale;
 	ResizingArrayQueue freeMales;
-
 	int n;
 
 
 	public GS() {
-		
 		
 		this.parsefile();
 
